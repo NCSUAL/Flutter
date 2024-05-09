@@ -1,4 +1,4 @@
-import 'package:bloc_pattern/UI/test.dart';
+import 'package:bloc_pattern/View/test.dart';
 import 'package:flutter/material.dart';
 
 void main(){
