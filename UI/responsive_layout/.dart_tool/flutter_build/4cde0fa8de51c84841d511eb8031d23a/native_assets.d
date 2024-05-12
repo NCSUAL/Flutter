@@ -1,0 +1,1 @@
+ C:\\practice_Flutter\\Flutter\\UI\\responsive_layout\\.dart_tool\\flutter_build\\4cde0fa8de51c84841d511eb8031d23a\\native_assets.yaml: 

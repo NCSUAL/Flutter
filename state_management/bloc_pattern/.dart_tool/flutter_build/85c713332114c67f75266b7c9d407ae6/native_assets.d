@@ -1,1 +1,0 @@
- C:\\practice_Flutter\\Flutter\\state_management\\bloc_pattern\\.dart_tool\\flutter_build\\85c713332114c67f75266b7c9d407ae6\\native_assets.yaml: 
