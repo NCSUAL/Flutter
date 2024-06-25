@@ -1,6 +1,11 @@
+import 'package:bloc_provider/EncounterPage.dart';
+import 'package:bloc_provider/TestModel.dart';
+import 'package:bloc_provider/state_management/EncounterBloc.dart';
+import 'package:bloc_provider/state_management/Test_Bloc.dart';
+import 'package:bloc_provider/state_management/Test_State.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'state_management/Test_State.dart';
+import 'package:get/get.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -11,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -32,7 +37,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiBlocProvider(providers: [
+        BlocProvider(create: (context) => Test_Bloc()),
+        BlocProvider(create: (context) => EncounterBloc()),
+      ], child:const MyHomePage(title: 'Flutter Demo Home Page') ),
+      getPages: [
+        GetPage(name: '/nextPage', page: ()=> BlocProvider(create: (context) => EncounterBloc(),child: EncounterPage())),
+        
+      ],
     );
   }
 }
@@ -56,7 +68,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,20 +106,29 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+
+            ElevatedButton(onPressed: (){
+              Get.toNamed('/nextPage');
+            }, child: Text("다음 페이지로 이동")),
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<>(
-              child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+
+            BlocBuilder<Test_Bloc,TestModel>(
+              builder: (context,state) {
+                return Text(
+                  '${state.count}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              }
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){
+          context.read<Test_Bloc>().add(AddCountEvent());
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

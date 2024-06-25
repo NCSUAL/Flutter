@@ -39,6 +39,8 @@ dependencies:
   flutter_bloc:
   rxdart:
   equatable:
+  get:
+  dio:
 
 dev_dependencies:
   flutter_test:
